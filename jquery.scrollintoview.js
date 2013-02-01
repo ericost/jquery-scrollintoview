@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * jQuery scrollintoview() plugin and :scrollable selector filter
  *
  * Version 1.8 (14 Jul 2011)
@@ -20,7 +20,8 @@
 
 	var settings = {
 		duration: "fast",
-		direction: "both"
+		direction: "both",
+		offset: null
 	};
 
 	var rootrx = /^(?:html)$/i;
@@ -60,12 +61,15 @@
 			},
 			rect: (function () {
 				var r = $element[0].getBoundingClientRect();
-				return {
+				var rect = {
 					top: isRoot ? 0 : r.top,
 					left: isRoot ? 0 : r.left,
 					bottom: isRoot ? $element[0].clientHeight : r.bottom,
 					right: isRoot ? $element[0].clientWidth : r.right
-				};
+				}
+				rect.height = rect.bottom-rect.top;
+				rect.width = rect.right-rect.left;
+				return rect;
 			})()
 		};
 	};
@@ -112,13 +116,16 @@
 				// vertical scroll
 				if (options.direction.y === true)
 				{
+				
+					var vertical_offset = (options.offset == 'center' || options.offset == 'center_vertical') ? ((dim.s.rect.height)-(dim.e.rect.height))/2 : 0;
+					
 					if (rel.top < 0)
 					{
-						animOptions.scrollTop = dim.s.scroll.top + rel.top;
+						animOptions.scrollTop = dim.s.scroll.top + rel.top - vertical_offset;
 					}
 					else if (rel.top > 0 && rel.bottom < 0)
 					{
-						animOptions.scrollTop = dim.s.scroll.top + Math.min(rel.top, -rel.bottom);
+						animOptions.scrollTop = dim.s.scroll.top + Math.min(rel.top, -rel.bottom) + vertical_offset;
 					}
 				}
 
