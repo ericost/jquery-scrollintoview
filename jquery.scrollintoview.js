@@ -121,10 +121,22 @@
 					
 					if (rel.top < 0)
 					{
+						// scroll up (by default, element will appear at top of scrollable)
+					
+						if (options.offset == 'bottom') {
+							vertical_offset = dim.s.rect.height-dim.e.rect.height;
+						}
+						
 						animOptions.scrollTop = dim.s.scroll.top + rel.top - vertical_offset;
 					}
 					else if (rel.top > 0 && rel.bottom < 0)
 					{
+						// scroll down (by default, element will appear at bottom of scrollable)
+					
+						if (options.offset == 'top') {
+							vertical_offset = dim.s.rect.height-dim.e.rect.height;
+						}
+						
 						animOptions.scrollTop = dim.s.scroll.top + Math.min(rel.top, -rel.bottom) + vertical_offset;
 					}
 				}
