@@ -75,6 +75,14 @@
 	};
 
 	$.fn.extend({
+		dimensions: function() {
+			var el = this.eq(0);
+			return dimensions(el);
+		}
+	});
+	
+	
+	$.fn.extend({
 		scrollintoview: function (options) {
 			/// <summary>Scrolls the first element in the set into view by scrolling its closest scrollable parent.</summary>
 			/// <param name="options" type="Object">Additional options that can configure scrolling:
